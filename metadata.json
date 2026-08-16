@@ -1,0 +1,6 @@
+{
+  "name": "NusaLife - Manajer Hidup Digital PWA",
+  "description": "Aplikasi mobile PWA terintegrasi untuk mengelola kehidupan digital: Dashboard aktivitas, Password Cloud aman, Catatan & To-Do List, Alur Uang-Ku pencatat keuangan, Linimasa Travel log perjalanan, dan Profil pengaturan.",
+  "requestFramePermissions": ["camera", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
