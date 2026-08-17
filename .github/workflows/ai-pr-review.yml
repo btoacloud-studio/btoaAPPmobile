@@ -1,0 +1,39 @@
+name: Zero-Bug PR Reviewer
+
+# Kapan action ini berjalan?
+on:
+  pull_request:
+    types: [opened, synchronize, reopened] # Berjalan saat PR dibuat, ada commit baru, atau PR dibuka ulang
+
+# Konfigurasi izin akses untuk bot
+permissions:
+  pull-requests: write # Diwajibkan agar bot bisa menulis komentar di PR
+  contents: read       # Diwajibkan agar bot bisa membaca kode repository
+
+jobs:
+  ai-code-review:
+    name: Audit & Review PR Code
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. Mengambil kode dari repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Menyiapkan environment Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      # 3. Menginstal library yang dibutuhkan script Python
+      - name: Install Dependencies
+        run: pip install requests
+
+      # 4. Menjalankan script review.py
+      - name: Jalankan AI Code Review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: python .github/scripts/review.py
